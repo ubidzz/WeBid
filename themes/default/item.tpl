@@ -59,6 +59,9 @@ $(document).ready(function() {
 <!-- ELSE -->
 		<a href="{SITEURL}user_login.php?">{L_5202}</a>
 <!-- ENDIF -->
+		<a class="new-window" href="https://www.facebook.com/sharer.php?u={FB_URL}&amp;t={FB_TITLE}{FB_PRICE}" title="Share on Facebook!" target="_blank">{L_350_10167}</a>
+		<a class="new-window" href="https://twitter.com/home?status={FB_TITLE}-{FB_URL}" title="Share on twitter" rel="nofollow" target="_blank"> {L_350_10168}</a>
+		<a class="new-window" href="https://plus.google.com/share?url={FB_URL}" title="Share on Google+" target="_blank"> {L_350_10169}</a>
 	</div>
 <!-- IF B_USERBID -->
 	<div class="{YOURBIDCLASS}">
