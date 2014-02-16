@@ -2,6 +2,7 @@
 
 <form name="details" action="" method="post">
 <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
+<input type="hidden" name="FB_ids" value="{FBOOK_ID}">
 <table width="100%" border="0" cellpadding="4" align="center">
 	<tr>
 		<td align="right" width="30%">{L_002}</td>
@@ -98,6 +99,9 @@
 			{L_029}<br><span class="smallspan"><i>{L_609}</i></span>
 		</td>
 	</tr>
+<!-- ENDIF -->
+<!-- IF B_FBOOK_LOGIN -->
+<div>{FBOOK_EMAIL}</div>
 <!-- ENDIF -->
 </table>
 
