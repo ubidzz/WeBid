@@ -1,3 +1,28 @@
+<script type="text/javascript">
+window.fbAsyncInit = function() {
+	FB.init({
+	appId      : '{FBOOK_APPID}', 
+	status     : true, 
+	cookie     : true, 
+	xfbml      : true  
+	});
+};
+(function(d){
+	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement('script'); js.id = id; js.async = true;
+	js.src = "//connect.facebook.net/en_US/all.js";
+	ref.parentNode.insertBefore(js, ref);
+}(document));
+
+function FBLogin(){
+	FB.login(function(response){
+		if(response.authResponse){
+			window.location.href = "index.php?fbconnect=fblogin";
+		}
+	}, {scope: 'email,user_likes'});
+}
+</script>
 <table width="100%" border="0" cellpadding="0" cellspacing="0" class="smallpadding">
 <tr>
 	<td width="22%" valign="top" class="columL">
@@ -99,6 +124,11 @@
         <form name="login" action="{SSLURL}user_login.php" method="post">
         <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
             <table width="100%">
+            <!-- IF B_FBOOK_LOGIN -->
+            <tr>
+            	<td><img src="https://ubidzz.com/images/facebook-connect.png" alt="Fb Connect" title="You mush have a account on our website to use the Login with facebook" style="cursor:pointer" onclick="FBLogin();"></td>
+            </tr>
+            <!-- ENDIF -->
             <tr>
                 <td width="25%"><label for="username" title="please enter your username">{L_003}</label></td>
                 <td width="75%"><input type="text" name="username" id="username" size="10" maxlength="20"></td>
