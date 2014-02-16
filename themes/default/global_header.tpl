@@ -6,6 +6,10 @@
 <meta name="description" content="{DESCRIPTION}">
 <meta name="keywords" content="{KEYWORDS}">
 <meta name="generator" content="WeBid">
+<meta property="og:title" content="{FB_TITLE}{FB_PRICE}">
+<meta property="og:url" content="{FB_URL}">
+<meta property="og:description" content="{FB_DESC}">
+<meta property="og:image" content="{FB_IMG}">
 
 <link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/style.css">
 <link rel="stylesheet" type="text/css" href="{INCURL}themes/{THEME}/jquery.lightbox.css" media="screen">
