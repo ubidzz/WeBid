@@ -1,3 +1,29 @@
+<script type="text/javascript">
+window.fbAsyncInit = function() {
+	FB.init({
+	appId      : '{FBOOK_APPID}',  
+	status     : true, 
+	cookie     : true, 
+	xfbml      : true  
+	});
+};
+(function(d){
+	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement('script'); js.id = id; js.async = true;
+	js.src = "//connect.facebook.net/en_US/all.js";
+	ref.parentNode.insertBefore(js, ref);
+}(document));
+
+function FBLogin(){
+	FB.login(function(response){
+		if(response.authResponse){
+			window.location.href = "register.php?fbconnect=fblogin";
+		}
+	}, {scope: 'email,user_likes'});
+}
+
+</script>
 <div class="content">
 	<div class="tableContent2">
 		<div class="titTable2">
@@ -13,6 +39,15 @@
 			<form name="registration" action="{SSLURL}register.php" method="post">
             <input type="hidden" name="csrftoken" value="{_CSRFTOKEN}">
 				<table width="90%" border="0" cellpadding="4" cellspacing="0">
+					<tr>
+					<!-- IF B_FBOOK_LOGIN -->
+						<td></td>
+						<td align="center">{L_350_10188}<br><br>
+						<!-- IF FBOOK_EMAIL --><img src="images/longin1.png"> {L_350_10186}<br><br><!-- ELSE --><img src="images/redlogin1.png"> {L_350_10187} <br><br><!-- ENDIF -->
+						<img src="https://ubidzz.com/images/facebook-connect.png" alt="Fb Connect" title="Click this button to link your facebook account with our website" style="cursor:pointer" onclick="FBLogin();">
+						</td>
+					<!-- ENDIF -->
+					</tr>
 					<tr>
 						<td width="40%" valign="top" align="right"><b>{L_002}</b> *</td>
 						<td width="60%">
