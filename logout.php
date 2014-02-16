@@ -25,6 +25,12 @@ if (isset($_COOKIE['WEBID_RM_ID']))
 	setcookie('WEBID_RM_ID', '', time() - 3600);
 }
 
+unset($_SESSION['FBOOK_USER_IDS']);
+unset($_SESSION['FB_WB']);
+unset($_SESSION['FBOOK_USER_EMAIL']);
+unset($_SESSION['FBOOK_USER_NAME']);
+unset($_SESSION['FBOOK_USER_IMAGE']);
+
 header('location: index.php');
 exit;
 ?>
