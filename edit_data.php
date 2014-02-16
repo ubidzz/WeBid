@@ -15,6 +15,11 @@
 include 'common.php';
 include $include_path . 'countries.inc.php';
 
+if ($system->SETTINGS['facebook_login'] == 'y')
+{
+$_SESSION['REDIRECT_AFTER_FBLOGIN'] = 'edit_data.php';
+}
+
 // If user is not logged in redirect to login page
 if (!$user->is_logged_in())
 {
@@ -171,6 +176,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'update')
 			$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);
 			$ERR = $MSG['183'];
 		}
+		if (isset($_SESSION['FBOOK_USER_IDS']))
+		{
+			$query = "UPDATE " . $DBPrefix . "users SET fblogin_id = " . $_SESSION['FBOOK_USER_IDS'] . " WHERE id = '".$user->user_data['id']."'";
+        	$system->check_mysql(mysql_query($query), $query, __LINE__, __FILE__);	
+		}
 	}
 	else
 	{
@@ -233,6 +243,38 @@ $dobday .= '</select>';
 $selectsetting = $USER['timecorrection'];
 $time_correction = generateSelect('TPL_timezone', $TIMECORRECTION);
 
+///Facebook check to see if the account is link to facebook
+$query = "SELECT fblogin_id FROM " . $DBPrefix . "users WHERE id = " . $user->user_data['id']; 
+$result = mysql_query($query); 
+$system->check_mysql($result, $query, __LINE__, __FILE__); 
+$fbcheck = mysql_fetch_assoc($result);
+$user_fb = $fbcheck['fblogin_id'];
+
+$id_checked = $_SESSION['FBOOK_USER_IDS'];
+$id_checked = $user_fb;
+
+$query = "SELECT fb_id FROM " . $DBPrefix . "fblogin WHERE fb_id = " . $id_checked;
+$sql = mysql_query($query);
+$system->check_mysql($sql, $query, __LINE__, __FILE__);
+$fb_check = mysql_fetch_assoc($sql);
+$fb_id_checked = $fb_check['fb_id'];
+$check_wb_fb = $user_fb == $fb_id_checked;
+
+if ($check_wb_fb)
+{
+	$fbconnected = '<img src="images/longin1.png">' . $MSG['350_10190'] . '<br><br>' . '<a href="edit_data.php?fbconnect=unlinked">Removed</a>';
+
+}	
+elseif ((isset($_SESSION['FBOOK_USER_IDS'])) && $user_fb == '0')
+{
+	$fbconnected = '<img src="images/loadingAnimation.gif" style="float: left">&nbsp;' . $MSG['350_10203'] . '<br><br><span style="float:left"><button  type="submit" name="Input">' . $MSG['530'] . '</button><input type="hidden" name="action" value="update"></span>';
+	
+}
+elseif ($user_fb == '0')
+{
+	$fbconnected = '<img src="images/redlogin1.png">' . $MSG['350_10191'] . '<br><br>' . '<img src="images/facebook-connect.png" alt="Fb Connect" style="cursor:pointer" onclick="FBLogin();">';
+}	
+
 $template->assign_vars(array(
 		'COUNTRYLIST' => $country,
 		'NAME' => $USER['name'],
@@ -265,7 +307,9 @@ $template->assign_vars(array(
 		'B_AUTHNET' => ($gateway_data['authnet_active'] == 1),
 		'B_WORLDPAY' => ($gateway_data['worldpay_active'] == 1),
 		'B_TOOCHECKOUT' => ($gateway_data['toocheckout_active'] == 1),
-		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1)
+		'B_MONEYBOOKERS' => ($gateway_data['moneybookers_active'] == 1),
+		'FBOOK_EMAIL' => $fbconnected,
+		'FBOOK_ID' => (isset($_SESSION['FBOOK_USER_IDS'])) ? $_SESSION['FBOOK_USER_IDS'] : 0,
 		));
 
 $TMP_usmenutitle = $MSG['509'];
