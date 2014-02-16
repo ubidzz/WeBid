@@ -1,3 +1,29 @@
+<script type="text/javascript">
+window.fbAsyncInit = function() {
+	FB.init({
+	appId      : '{FBOOK_APPID}',  
+	status     : true, 
+	cookie     : true, 
+	xfbml      : true  
+	});
+};
+(function(d){
+	var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement('script'); js.id = id; js.async = true;
+	js.src = "//connect.facebook.net/en_US/all.js";
+	ref.parentNode.insertBefore(js, ref);
+}(document));
+
+function FBLogin(){
+	FB.login(function(response){
+		if(response.authResponse){
+			window.location.href = "user_login.php?fbconnect=fblogin";
+		}
+	}, {scope: 'email,user_likes'});
+}
+
+</script>
 <div class="content">
 	<div class="titTable2">
 		{L_181}
@@ -10,6 +36,15 @@
 <!-- ENDIF -->
 		<div class="padding centre">
         <table width="676" border="0" cellpadding="6">
+        <!-- IF B_FBOOK_LOGIN -->
+        <tr>
+        	<td>
+			<!-- IF FBOOK_EMAIL 
+			<img align="middle"src="https://ubidzz.com/images/facebook-connect.png" alt="Fb Connect" title="You mush have a account on our website to use the Login with facebook" style="cursor:pointer" onclick="FBLogin();">
+			<!-- ENDIF -->
+		</td>
+        </tr>
+        <!-- ENDIF -->
             <tr>
                 <td width="301">
                     <h2>{L_862}</h2>
