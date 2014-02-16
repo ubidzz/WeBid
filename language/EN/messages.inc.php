@@ -1689,4 +1689,36 @@ $MSG['30_0110'] = "Shipping";
 $MSG['350_1004'] = "Quantity";
 $MSG['350_1008'] = "Additional Shipping";
 $MSG['350_1009'] = "Additional Shipping Cost";
+
+///Login with facebook mod
+$MSG['350_10167'] = "Share on Facebook";
+$MSG['350_10168'] = "Share on Twitter";
+$MSG['350_10169'] = "Share on Google+";
+$MSG['350_10186'] = "You are now connected with facebook <br>Please finish filling in your info to register for an account";
+$MSG['350_10187'] = "You are not connected with facebook";
+$MSG['350_10188'] = "If you would like to use the connect with facebook button to login to our website follow the setps below
+<br>1. Click the connect with facebook button 
+<br>2. finish filling in your personal info
+<br>3. Click Register Now button
+<br>4. Activate your new account 
+<br>5. you can now use the connect with facebook button to login to our website.";
+$MSG['350_10189'] = "Personal info";
+$MSG['350_10190'] = "Your account is now connected with facebook";
+$MSG['350_10191'] = "Your account is not connected with facebook";
+$MSG['350_10192'] = "If you would like to use the connect with facebook button to login to our website follow the setps below.
+<br>1. Click the connect with facebook button 
+<br>2. Click the Save changes button 
+<br>3. You can now click the Connect with Facebook button to login to our website.";
+$MSG['350_10194'] = "Facebook app id";
+$MSG['350_10195'] = "Facebook app secret";
+$MSG['350_10196'] = "Facebook login";
+$MSG['350_10197'] = "Do you want to let users login with facebook";
+$MSG['350_10198'] = "Add your facebook app id here";
+$MSG['350_10199'] = "Add your facebook app secret here";
+$MSG['350_10200'] = "You can allow people to login and register with there facebook account you will need the facebook app id and app secret.<br> <a href='https://developers.facebook.com'>Click Here</a> to get the facebook app id and app secret.";
+$MSG['350_10201'] = "Facebook developer";
+$MSG['350_10202'] = "Click the Connect with Facebook button to link your Facebook Account with your account.";
+$MSG['350_10203'] = "Click the Save Changes button to finish linking your Facebook Account to your account.";
+
+/// End of Login with facebook mod
 ?>
