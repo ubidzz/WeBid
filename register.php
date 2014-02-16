@@ -15,6 +15,11 @@
 include 'common.php';
 include $include_path . 'countries.inc.php';
 
+if ($system->SETTINGS['facebook_login'] == 'y')
+{
+$_SESSION['REDIRECT_AFTER_FBLOGIN'] = 'register.php?';
+}
+
 // check recaptcha is enabled
 if ($system->SETTINGS['spam_register'] == 2)
 {
@@ -312,10 +317,11 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 				{
 					$groups[] = $row['id'];
 				}
+				$newfbloginids = $_SESSION['FBOOK_USER_IDS'];
 				$hash = get_hash();
 				$query = "INSERT INTO " . $DBPrefix . "users
 						(nick, password, hash, name, address, city, prov, country, zip, phone, nletter, email, reg_date, 
-						birthdate, suspended, language, groups, balance, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
+						birthdate, suspended, language, groups, balance, fblogin_id, timecorrection, paypal_email, worldpay_id, moneybookers_email, toocheckout_id, authnet_id, authnet_pass)
 						VALUES ('" . $system->cleanvars($TPL_nick_hidden) . "',
 						'" . md5($MD5_PREFIX . $TPL_password_hidden) . "',
 						'" . $hash . "',
@@ -334,6 +340,7 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 						'" . $language . "',
 						'" . implode(',', $groups) . "',
 						'" . $balance . "',
+						'" . $newfbloginids . "',
 						" . intval($_POST['TPL_timezone']) . ",
 						'" . ((isset($_POST['TPL_pp_email'])) ? $system->cleanvars($_POST['TPL_pp_email']) : '') . "',
 						'" . ((isset($_POST['TPL_worldpay_id'])) ? $system->cleanvars($_POST['TPL_worldpay_id']) : '') . "',
@@ -379,7 +386,8 @@ if (isset($_POST['action']) && $_POST['action'] == 'first')
 					header('location: pay.php?a=3');
 					exit;
 				}
-
+				unset($_SESSION['FBOOK_USER_EMAIL']);
+				unset($_SESSION['FBOOK_USER_NAME']);
 				$template->assign_vars(array(
 						'L_HEADER' => sprintf($MSG['859'], $TPL_name_hidden),
 						'L_MESSAGE' => $TPL_message
@@ -506,15 +514,18 @@ $template->assign_vars(array(
 
 		'V_YNEWSL' => ((isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 1) || !isset($_POST['TPL_nletter'])) ? 'checked=true' : '',
 		'V_NNEWSL' => (isset($_POST['TPL_nletter']) && $_POST['TPL_nletter'] == 2) ? 'checked=true' : '',
-		'V_YNAME' => (isset($_POST['TPL_name'])) ? $_POST['TPL_name'] : '',
+		'V_YNAME' => (isset($_POST['TPL_name'])) ? $_POST['TPL_name'] : $_SESSION['FBOOK_USER_NAME'],
 		'V_UNAME' => (isset($_POST['TPL_nick'])) ? $_POST['TPL_nick'] : '',
-		'V_EMAIL' => (isset($_POST['TPL_email'])) ? $_POST['TPL_email'] : '',
+		'V_EMAIL' => (isset($_POST['TPL_email'])) ? $_POST['TPL_email'] : $_SESSION['FBOOK_USER_EMAIL'],
 		'V_YEAR' => (isset($_POST['TPL_year'])) ? $_POST['TPL_year'] : '',
 		'V_ADDRE' => (isset($_POST['TPL_address'])) ? $_POST['TPL_address'] : '',
 		'V_CITY' => (isset($_POST['TPL_city'])) ? $_POST['TPL_city'] : '',
 		'V_PROV' => (isset($_POST['TPL_prov'])) ? $_POST['TPL_prov'] : '',
 		'V_POSTCODE' => (isset($_POST['TPL_zip'])) ? $_POST['TPL_zip'] : '',
-		'V_PHONE' => (isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : ''
+		'V_PHONE' => (isset($_POST['TPL_phone'])) ? $_POST['TPL_phone'] : '',
+		
+		'FBOOK_EMAIL' => (isset($_SESSION['FBOOK_USER_EMAIL'])),
+		'FBOOK_ID' => (isset($_SESSION['FBOOK_USER_IDS'])) ? $_SESSION['FBOOK_USER_IDS'] : 0,
 		));
 
 include 'header.php';
