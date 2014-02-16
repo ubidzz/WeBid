@@ -58,7 +58,10 @@ $template->assign_vars(array(
 
 		'B_CAN_SELL' => ($user->can_sell || !$user->logged_in),
 		'B_LOGGED_IN' => $user->logged_in,
-		'B_BOARDS' => ($system->SETTINGS['boards'] == 'y')
+		'B_BOARDS' => ($system->SETTINGS['boards'] == 'y'),
+		'B_FBOOK_LOGIN' => ($system->SETTINGS['facebook_login'] == 'y'),
+		'FBOOK_APPID' => $system->SETTINGS['facebook_app_id'],
+		'FBOOK_APPSECRET' => $system->SETTINGS['facebook_app_secret']
 		));
 
 $template->set_filenames(array(
