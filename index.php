@@ -15,6 +15,11 @@
 include 'common.php';
 include $main_path . 'language/' . $language . '/categories.inc.php';
 
+///unset all login with facebook mod session's
+unset($_SESSION['REDIRECT_AFTER_FBLOGIN']);
+unset($_SESSION['FBOOK_USER_IDS']);
+unset($_SESSION['FBOOK_USER_EMAIL']);
+
 // Run cron according to SETTINGS
 if ($system->SETTINGS['cron'] == 2)
 {
