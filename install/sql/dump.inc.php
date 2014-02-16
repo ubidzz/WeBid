@@ -937,7 +937,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqs_translated` (
 # 
 
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'EN', 'Registering', 'To register as a new user, click on Register at the top of the window. You will be asked for your name, a username and password, and contact information, including your email address.\r\n\r\n<B>You must be at least 18 years of age to register.</B>!');";
-$query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'ES', 'Registrarse', 'Para registrar un nuevo usuario, haz click en <B>Reg&iacute;Â­strate</B> en la parte superior de la pantalla. Se te preguntar&aacute;n tus datos personales, un nombre de usuario, una contrase&ntilde;a e informacion de contacto como la direccion e-mail.\r\n\r\n<B>�Tienes que ser mayor de edad para poder registrarte!</B>');";
+$query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (2, 'ES', 'Registrarse', 'Para registrar un nuevo usuario, haz click en <B>Reg&iacute;Â­strate</B> en la parte superior de la pantalla. Se te preguntar&aacute;n tus datos personales, un nombre de usuario, una contrase&ntilde;a e informacion de contacto como la direccion e-mail.\r\n\r\n<B>�Tienes que ser mayor de edad para poder registrarte!</B>');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (4, 'EN', 'Item Watch', '<b>Item watch</b> notifies you when someone bids on the auctions that you have added to your Item Watch. ');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (4, 'ES', 'En la Mira', '<i><b>En la Mira</b></i> te env&iacute;a una notificacion por e-mail, cada vez que alguien puja en una de las subastas que has a&ntilde;adido a tu lista <i>En la Mira</i>. ');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqs_translated` VALUES (6, 'ES', 'Auction Watch', '<i><B>Auction Watch</b></i> es tu asistente para saber cuando se abre una subasta cuya descripcion contiene palabras clave de tu interes.\r\n\r\nPara usar esta opcion inserta las palabras clave en las que est&aacute;s interesado en la lista de <i>Auction Watch</i>. Todas las palabras claves deben estar separadas por un espacio. Cuando estas palabras claves aparezcan en alg&uacute;n t&iacute;tulo o descripcion de subasta, recibir&aacute;s un e-mail con la informacion de que una subasta que contiene tus palabras claves ha sido creada. Tambi&aacute;n puedas agregar el nombre del usuario como palabra clave. ');";
@@ -986,6 +986,31 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "faqscategories` (
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (1, 'General');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (2, 'Selling');";
 $query[] = "INSERT INTO `" . $DBPrefix . "faqscategories` VALUES (3, 'Buying');";
+
+# ############################
+
+# 
+# Table structure for table `" . $DBPrefix . "fblogin`
+# 
+
+$query[] = "DROP TABLE IF EXISTS `" . $DBPrefix . "fblogin`;";
+$query[] = "CREATE TABLE `" . $DBPrefix . "fblogin` (
+  `id` int(30) NOT NULL auto_increment,
+  `fb_id` int(150) default NULL,
+  `name` varcar(60) default NULL,
+  `email` varcar(100) default NULL,
+  `image` varcar(600) default NULL,
+  `postdate` int(100) default NULL,
+  `address` varcar(100) default NULL,
+  `phone` varcar(60) default NULL,
+  `birthday` varcar(50) default NULL,
+  `status` varcar(50) default NULL,
+  PRIMARY KEY  (`id`)
+) ;";
+
+# 
+# Dumping data for table `" . $DBPrefix . "fblogin`
+# 
 
 # ############################
 
@@ -1534,7 +1559,10 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "settings` (
   `autorelist` ENUM('y','n') NOT NULL default 'y',
   `autorelist_max` int(3) NOT NULL default '10',
   `invoice_yellow_line` varchar(255) NOT NULL default '',
-  `invoice_thankyou` varchar(255) NOT NULL default ''
+  `invoice_thankyou` varchar(255) NOT NULL default '',
+  `facebook_login` enum('y','n') NOT NULL default 'n',
+  `facebook_app_id` varchar(100) NOT NULL default '',
+  `facebook_app_secret` varchar(100) NOT NULL default '',
 );";
 
 # 
@@ -1636,7 +1664,10 @@ $query[] = "INSERT INTO `" . $DBPrefix . "settings` VALUES
 'y',
 10,
 '',
-'Thank you for shopping with us and we hope to see you return soon!');";
+'Thank you for shopping with us and we hope to see you return soon!',
+'n',
+'',
+'');";
 
 
 # ############################
@@ -1727,6 +1758,7 @@ $query[] = "CREATE TABLE `" . $DBPrefix . "users` (
   `moneybookers_email` varchar(50) default '',
   `toocheckout_id` varchar(50) default '',
   `language` char(2) NOT NULL default '',
+  `fblogin_id` int(100) NOT NULL default '0',
   PRIMARY KEY  (`id`)
 );";
 
